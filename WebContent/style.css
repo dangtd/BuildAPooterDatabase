@@ -1,0 +1,96 @@
+@CHARSET "ISO-8859-1";
+
+body{
+	background:grey;
+	padding:0;
+	margin:0;
+	overflow-y:scroll;
+	font-family:monospace;
+	font-size:18px;
+}
+
+
+p{
+	text-align: center;
+	margin: 0 auto;
+	width:400px;
+}
+
+
+h1{
+	padding-top:50px;
+	text-align:center;
+}
+#title{width:50%;text-align:center}
+#login{float:right}
+#nav{
+	margin:0 auto;
+	position:fixed;
+	background-color:#222;
+}
+
+#navWrapper{
+	width:1200px;
+	margin:0 auto;
+	text-align: left;
+}
+
+#nav ul{
+	list-style-type:none;
+	padding: 0;
+	margin:0;
+	position:relative;
+}
+
+#nav ul li{
+	color:white;
+	padding:15px;
+	display:inline-block;
+}
+
+#nav ul li:hover{
+	background: #333
+}
+
+#nav ul li a, visited{
+	text-decoration:none;
+	color:#ccc;
+	display:block;
+	padding:15px;
+}
+
+#nav ul li a:hover{
+	color:#ccc;
+}
+
+#nav ul li:hover ul{
+	display:block;
+}
+
+#nav ul ul{
+	display:none;
+	position:absolute;
+	background: #333;
+	min-width: 250px;
+}
+
+#nav ul ul li{
+	border-right:4px solid black ;
+	border-bottom:4px solid black ;
+	display:block;
+}
+
+#nav ul ul li a, visited{
+	color:#ccc;
+}
+
+#nav ul ul li a:hover{
+	color:#099;
+}
+
+
+#login{
+	padding-top:50px;
+}
+
+
