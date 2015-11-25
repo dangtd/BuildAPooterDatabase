@@ -1,10 +1,14 @@
 package ca.sheridancollege.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SelectBeforeUpdate;
@@ -110,4 +114,12 @@ public class Build implements Serializable {
 		super();
 	}
 	
+	@OneToMany(fetch=FetchType.EAGER )
+	private List<Comment> commentList = new ArrayList<Comment>();
+	public List<Comment> getCommentList() {
+		return commentList;
+	}
+	public void setCommentList(List<Comment> commentList) {
+		this.commentList = commentList;
+	}
 }

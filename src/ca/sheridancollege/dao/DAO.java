@@ -66,6 +66,31 @@ public class DAO {
 		
 	}
 	
+	public boolean checkUser(String email){
+		Session session= sessionFactory.openSession();
+		session.beginTransaction();
+		
+		
+		Query query= session.createQuery("from User where email = :email");
+		query.setString("email", email);
+		List<User> userList = (List<User>)query.list();
+		boolean check;
+		
+		if(userList.isEmpty()){
+			check = true;
+		}
+		else{
+			check = false;
+		}
+		
+		session.getTransaction().commit();
+		session.close();	
+		
+		return check;
+
+		
+	}
+	
 	public List<Build> getBuildByUser(User user){
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
