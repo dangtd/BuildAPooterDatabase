@@ -82,6 +82,22 @@ public class DAO {
 		return userList.get(0);
 	}
 	
+public Build getBuildByBuildId(int buildId){
+		
+		Session session= sessionFactory.openSession();
+		session.beginTransaction();
+		
+		
+		Query query= session.createQuery("from Build where buildId = :buildId");
+		query.setInteger("buildId", buildId);
+		List<Build> buildList = (List<Build>)query.list();
+		
+		session.getTransaction().commit();
+		session.close();
+		
+		return buildList.get(0);
+	}
+	
 	public boolean checkUser(String email){
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();

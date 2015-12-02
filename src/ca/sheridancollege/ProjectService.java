@@ -51,9 +51,10 @@ public class ProjectService implements Runnable {
 			
 			
 			
-			//create instance of list of user and user object
+			//create instance of list of user, build and user objects
 			List<User> userList = new ArrayList();
 			User user = new User();
+			Build build = new Build();
 			
 			switch(option){
 				case 1:// create user			
@@ -96,37 +97,60 @@ public class ProjectService implements Runnable {
 					break;
 					
 				case 3://insert comment
+					//convert comment json to java object
 					Comment comment = mapper.readValue(jsonReceive, Comment.class);
-					User userLogin = mapper.readValue(jsonReceive, User.class);
-					userList = dao.login(userLogin.getUserName(), userLogin.getPassword());
-					userList.get(0).getCommentList().add(comment);
-					//need to have build ID to relate with comment
-					dao.insertUser(userList.get(0));
-					dao.insertComment(comment);
-					out.print(1);
-					out.flush();
-					System.out.println("comment inserted");
-					user = null;
-					userList.clear();
-					break;
-										
-				case 4://insert build
-					//convert build json to java object
-					
-					Build build = mapper.readValue(jsonReceive, Build.class);
 					
 					//take in user email to search for user
 					String userEmail = (String)in.readLine();
 					
+					//take in build ID to search for build
+					int buildId = Integer.parseInt(in.readLine());
+					
+					//get user info
+					user = dao.getUserByEmail(userEmail);
+					
+					//add comment to user's comment
+					user.getCommentList().add(comment);
 					
 					
-					System.out.println(userEmail);
+					//get build info
+					build = dao.getBuildByBuildId(buildId); 
+					
+					//add comment to build's comment
+					build.getCommentList().add(comment);
+					
+					//insert comment
+					dao.insertComment(comment);
+					
+					//update user
+					dao.insertUser(user);
+					
+					//update build
+					dao.insertBuild(build);
+				
+					out.print(1);
+					out.flush();
+					System.out.println("comment inserted");
+					user = null;
+					build = null;
+					break;
+										
+				case 4://insert build
+					//convert build json to java object
+					build = mapper.readValue(jsonReceive, Build.class);
+					
+					//take in user email to search for user
+					String userEmail2 = (String)in.readLine();
+					
+					
+					
+					System.out.println(userEmail2);
 					
 					
 					
 					
 					//get user info
-					user = dao.getUserByEmail(userEmail);
+					user = dao.getUserByEmail(userEmail2);
 					
 					//add build to user's build
 					user.getBuildList().add(build);
@@ -144,7 +168,7 @@ public class ProjectService implements Runnable {
 					out.flush();
 					System.out.println("build inserted");	
 					user = null;
-					userList.clear();
+					build = null;
 					break;			
 			}
 			
