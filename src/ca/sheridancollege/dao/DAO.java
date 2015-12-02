@@ -66,6 +66,19 @@ public class DAO {
 		
 	}
 	
+	public List<User> getUserByEmail(String email){
+		
+		Session session= sessionFactory.openSession();
+		session.beginTransaction();
+		
+		
+		Query query= session.createQuery("from User where email = :email");
+		query.setString("email", email);
+		List<User> userList = (List<User>)query.list();
+		
+		return userList;
+	}
+	
 	public boolean checkUser(String email){
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
@@ -91,7 +104,7 @@ public class DAO {
 		
 	}
 	
-	public List<Build> getBuildByUser(User user){
+	/*public List<Build> getBuildByUser(User user){
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
 
@@ -117,9 +130,9 @@ public class DAO {
 		session.close();	
 
 		return commentList;
-	}
+	}*/
 
-
+	
 
 
 	

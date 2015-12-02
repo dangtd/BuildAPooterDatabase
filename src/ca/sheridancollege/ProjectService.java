@@ -10,8 +10,8 @@ import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import ca.sheridancollege.beans.Build;
 import ca.sheridancollege.beans.Comment;
+import ca.sheridancollege.beans.ComputerPart;
 import ca.sheridancollege.beans.User;
 import ca.sheridancollege.dao.DAO;
 
@@ -39,93 +39,139 @@ public class ProjectService implements Runnable {
 			
 			System.out.println("checking the number");
 			
-			//read in option
+			//read integer option
 			int option = Integer.parseInt(in.readLine());
 			
 			//json receive
 			String jsonReceive = (String) in.readLine();
 			
-			//global userList
-			List<User> userList = new ArrayList();
 			
+			
+			//create instance of list of user and user object
+			List<User> userList = new ArrayList();
+			User user = new User();
 			
 			switch(option){
-				case 1:// create user
-					
-					//convert to java object
-					User user = mapper.readValue(jsonReceive, User.class);
-					
+				case 1:// create user			
+					user = mapper.readValue(jsonReceive, User.class);
 					//check user existence
 					if(dao.checkUser(user.getEmail())){
+						//if not exist, insert user
 						dao.insertUser(user);
 						System.out.println("insert user");
-						out.println(1);
+						
+						//determine user inserted
+						out.print(1);
 						out.flush();
 					}
 					else{
 						System.out.println("email existed");
-						out.println(-1);
+						//if exist, determine user existed
+						out.print(-1);
 						out.flush();
-					}	
-					break;
-				case 2://login
-					User userLogin = mapper.readValue(jsonReceive, User.class);
-					synchronized(User.class){
-						userList = dao.login(userLogin.getUserName(), userLogin.getPassword());
-						if(userList.isEmpty()){
-							out.println(-1);
-							System.out.println("Nothing found");
-							out.flush();
-						}
-						else{
-							String returnUserInfo = mapper.writeValueAsString(userList.get(0));
-							out.println(returnUserInfo);
-							out.flush();
-							System.out.println("Welcome " + userList.get(0).getFirstName());
-						}
 					}
+					user = null;
+					break;
+					
+				case 2://login
+					user = mapper.readValue(jsonReceive, User.class);
+					userList = dao.login(user.getUserName(), user.getPassword());
+					if(userList.isEmpty()){
+						out.print(-1);
+						System.out.println("Nothing found");
+						out.flush();
+					}
+					else{
+						String returnUserInfo = mapper.writeValueAsString(userList.get(0));
+						out.print(returnUserInfo);
+						out.flush();
+						System.out.println("Welcome " + userList.get(0).getFirstName());
+					}
+					user = null;
+					userList.clear();
 					break;
 					
 				case 3://insert comment
 					Comment comment = mapper.readValue(jsonReceive, Comment.class);
+					User userLogin = mapper.readValue(jsonReceive, User.class);
+					userList = dao.login(userLogin.getUserName(), userLogin.getPassword());
 					userList.get(0).getCommentList().add(comment);
 					//need to have build ID to relate with comment
 					dao.insertUser(userList.get(0));
 					dao.insertComment(comment);
-					out.println(1);
+					out.print(1);
 					out.flush();
-					System.out.println("Welcome " + userList.get(0).getFirstName());
+					System.out.println("comment inserted");
+					user = null;
+					userList.clear();
 					break;
 										
 				case 4://insert build
-					Build build = mapper.readValue(jsonReceive, Build.class);
-					userList.get(0).getBuildList().add(build);
-					dao.insertUser(userList.get(0));
-					dao.insertBuild(build);
-					out.println(1);
-					out.flush();
-					System.out.println("Welcome " + userList.get(0).getFirstName());				
-					break;
-				case 5://log out
-					userList.clear();
-					out.println(1);
-					System.out.println("logged out");
-					out.flush();
-					break;
-				
-				
+					//convert build json to java object
 					
+					/*Build build = mapper.readValue(jsonReceive, Build.class);
+					System.out.println(build);*/
+					
+					//take in user email to search for user
+					String userEmail = (String)in.readLine();
+					String buildName = (String)in.readLine();
+					String computerCaseJson = (String)in.readLine();
+					ComputerPart computerCase = mapper.readValue(computerCaseJson, ComputerPart.class);
+					System.out.println(computerCase);
+					String processorJson = (String)in.readLine();
+					ComputerPart processor = mapper.readValue(processorJson, ComputerPart.class);
+					String motherboardJson = (String)in.readLine();
+					ComputerPart motherboard = mapper.readValue(motherboardJson, ComputerPart.class);
+					String ramJson = (String)in.readLine();
+					ComputerPart ram = mapper.readValue(ramJson, ComputerPart.class);
+					String powersupplyJson = (String)in.readLine();
+					ComputerPart powersupply = mapper.readValue(powersupplyJson, ComputerPart.class);
+					String graphiccardJson = (String)in.readLine();
+					ComputerPart graphiccard = mapper.readValue(graphiccardJson, ComputerPart.class);
+					String harddriveJson = (String)in.readLine();
+					ComputerPart harddrive = mapper.readValue(harddriveJson, ComputerPart.class);
+					String monitorJson = (String)in.readLine();
+					ComputerPart monitor = mapper.readValue(monitorJson, ComputerPart.class);
+					String keyboardJson = (String)in.readLine();
+					ComputerPart keyboard = mapper.readValue(keyboardJson, ComputerPart.class);
+					String webcamJson = (String)in.readLine();
+					ComputerPart webcam = mapper.readValue(webcamJson, ComputerPart.class);
+					String headsetJson = (String)in.readLine();
+					ComputerPart headset = mapper.readValue(headsetJson, ComputerPart.class);
+					String mouseJson = (String)in.readLine();
+					ComputerPart mouse = mapper.readValue(mouseJson, ComputerPart.class);
+					
+					
+					/*System.out.println(userEmail);
+					System.out.println("aaaa");
+					
+					
+					
+					//get user info
+					userList = dao.getUserByEmail(userEmail);
+					
+					//add build to user's build
+					userList.get(0).getBuildList().add(build);
+					
+					//update user
+					dao.insertUser(userList.get(0));
+					
+					//insert build
+					dao.insertBuild(build);
+					
+					//determine build is inserted
+					out.print(1);
+					out.flush();*/
+					System.out.println("build inserted");	
+					user = null;
+					userList.clear();
+					break;			
 			}
 			
 			
 			
 			
-			if(userList.isEmpty()){
-				System.out.println("empty");
-			}
-			else{
-				System.out.println(userList.get(0).getFirstName());
-			}
+			
 			
 			 
 			

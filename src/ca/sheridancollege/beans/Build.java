@@ -21,7 +21,7 @@ public class Build implements Serializable {
 	@Id
 	@GeneratedValue
 	private int buildId;
-	private String title, computerCase, motherBoard, ram, graphicCard, hardDrive, powerSupply, discDrive;
+	private ComputerPart name, computerCase, motherBoard, ram, graphicCard, hardDrive, powerSupply, processor, monitor, keyboard, webcam, headset, mouse;
 	
 	public int getBuildId() {
 		return buildId;
@@ -31,83 +31,108 @@ public class Build implements Serializable {
 		this.buildId = buildId;
 	}
 
-	public String getTitle() {
-		return title;
+	public ComputerPart getName() {
+		return name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(ComputerPart name) {
+		this.name = name;
 	}
 
-	public String getComputerCase() {
+	public ComputerPart getComputerCase() {
 		return computerCase;
 	}
 
-	public void setComputerCase(String computerCase) {
+	public void setComputerCase(ComputerPart computerCase) {
 		this.computerCase = computerCase;
 	}
 
-	public String getMotherBoard() {
+	public ComputerPart getMotherBoard() {
 		return motherBoard;
 	}
 
-	public void setMotherBoard(String motherBoard) {
+	public void setMotherBoard(ComputerPart motherBoard) {
 		this.motherBoard = motherBoard;
 	}
 
-	public String getRam() {
+	public ComputerPart getRam() {
 		return ram;
 	}
 
-	public void setRam(String ram) {
+	public void setRam(ComputerPart ram) {
 		this.ram = ram;
 	}
 
-	public String getGraphicCard() {
+	public ComputerPart getGraphicCard() {
 		return graphicCard;
 	}
 
-	public void setGraphicCard(String graphicCard) {
+	public void setGraphicCard(ComputerPart graphicCard) {
 		this.graphicCard = graphicCard;
 	}
 
-	public String getHardDrive() {
+	public ComputerPart getHardDrive() {
 		return hardDrive;
 	}
 
-	public void setHardDrive(String hardDrive) {
+	public void setHardDrive(ComputerPart hardDrive) {
 		this.hardDrive = hardDrive;
 	}
 
-	public String getPowerSupply() {
+	public ComputerPart getPowerSupply() {
 		return powerSupply;
 	}
 
-	public void setPowerSupply(String powerSupply) {
+	public void setPowerSupply(ComputerPart powerSupply) {
 		this.powerSupply = powerSupply;
 	}
 
-	public String getDiscDrive() {
-		return discDrive;
+	public ComputerPart getProcessor() {
+		return processor;
 	}
 
-	public void setDiscDrive(String discDrive) {
-		this.discDrive = discDrive;
+	public void setProcessor(ComputerPart processor) {
+		this.processor = processor;
 	}
 
+	public ComputerPart getMonitor() {
+		return monitor;
+	}
 
-	public Build(int buildId, String title, String computerCase, String motherBoard, String ram, String graphicCard,
-			String hardDrive, String powerSupply, String discDrive) {
-		super();
-		this.buildId = buildId;
-		this.title = title;
-		this.computerCase = computerCase;
-		this.motherBoard = motherBoard;
-		this.ram = ram;
-		this.graphicCard = graphicCard;
-		this.hardDrive = hardDrive;
-		this.powerSupply = powerSupply;
-		this.discDrive = discDrive;
+	public void setMonitor(ComputerPart monitor) {
+		this.monitor = monitor;
+	}
+
+	public ComputerPart getKeyboard() {
+		return keyboard;
+	}
+
+	public void setKeyboard(ComputerPart keyboard) {
+		this.keyboard = keyboard;
+	}
+
+	public ComputerPart getWebcam() {
+		return webcam;
+	}
+
+	public void setWebcam(ComputerPart webcam) {
+		this.webcam = webcam;
+	}
+
+	public ComputerPart getHeadset() {
+		return headset;
+	}
+
+	public void setHeadset(ComputerPart headset) {
+		this.headset = headset;
+	}
+
+	public ComputerPart getMouse() {
+		return mouse;
+	}
+
+	public void setMouse(ComputerPart mouse) {
+		this.mouse = mouse;
 	}
 
 	public Build() {
