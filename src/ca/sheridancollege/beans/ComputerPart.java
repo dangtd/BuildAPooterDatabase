@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class ComputerPart implements Serializable {
 	
-	private String title, partName, smallImage, mediumImage, largeImage, ASIN, price, numPrice;
+	private String title, partName, smallImage, mediumImage, largeImage, aSIN, price, numPrice;
 
 	public String getTitle() {
 		return title;
@@ -46,12 +46,14 @@ public class ComputerPart implements Serializable {
 		this.largeImage = largeImage;
 	}
 
-	public String getASIN() {
-		return ASIN;
+	
+
+	public String getaSIN() {
+		return aSIN;
 	}
 
-	public void setASIN(String aSIN) {
-		ASIN = aSIN;
+	public void setaSIN(String aSIN) {
+		this.aSIN = aSIN;
 	}
 
 	public String getPrice() {

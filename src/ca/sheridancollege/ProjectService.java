@@ -8,10 +8,11 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import ca.sheridancollege.beans.Build;
 import ca.sheridancollege.beans.Comment;
-import ca.sheridancollege.beans.ComputerPart;
 import ca.sheridancollege.beans.User;
 import ca.sheridancollege.dao.DAO;
 
@@ -31,6 +32,9 @@ public class ProjectService implements Runnable {
 		try {
 			//create object mapper instance to use for json converts
 			ObjectMapper mapper = new ObjectMapper();
+			/* mapper.setPropertyNamingStrategy(new MyNameStrategy());*/
+			/*mapper.configure(
+					DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);*/
 			
 			//get input and output stream to contact with client
 			BufferedReader in = new BufferedReader(new InputStreamReader(me.getInputStream()));
@@ -109,59 +113,35 @@ public class ProjectService implements Runnable {
 				case 4://insert build
 					//convert build json to java object
 					
-					/*Build build = mapper.readValue(jsonReceive, Build.class);
-					System.out.println(build);*/
+					Build build = mapper.readValue(jsonReceive, Build.class);
 					
 					//take in user email to search for user
 					String userEmail = (String)in.readLine();
-					String buildName = (String)in.readLine();
-					String computerCaseJson = (String)in.readLine();
-					ComputerPart computerCase = mapper.readValue(computerCaseJson, ComputerPart.class);
-					System.out.println(computerCase);
-					String processorJson = (String)in.readLine();
-					ComputerPart processor = mapper.readValue(processorJson, ComputerPart.class);
-					String motherboardJson = (String)in.readLine();
-					ComputerPart motherboard = mapper.readValue(motherboardJson, ComputerPart.class);
-					String ramJson = (String)in.readLine();
-					ComputerPart ram = mapper.readValue(ramJson, ComputerPart.class);
-					String powersupplyJson = (String)in.readLine();
-					ComputerPart powersupply = mapper.readValue(powersupplyJson, ComputerPart.class);
-					String graphiccardJson = (String)in.readLine();
-					ComputerPart graphiccard = mapper.readValue(graphiccardJson, ComputerPart.class);
-					String harddriveJson = (String)in.readLine();
-					ComputerPart harddrive = mapper.readValue(harddriveJson, ComputerPart.class);
-					String monitorJson = (String)in.readLine();
-					ComputerPart monitor = mapper.readValue(monitorJson, ComputerPart.class);
-					String keyboardJson = (String)in.readLine();
-					ComputerPart keyboard = mapper.readValue(keyboardJson, ComputerPart.class);
-					String webcamJson = (String)in.readLine();
-					ComputerPart webcam = mapper.readValue(webcamJson, ComputerPart.class);
-					String headsetJson = (String)in.readLine();
-					ComputerPart headset = mapper.readValue(headsetJson, ComputerPart.class);
-					String mouseJson = (String)in.readLine();
-					ComputerPart mouse = mapper.readValue(mouseJson, ComputerPart.class);
 					
 					
-					/*System.out.println(userEmail);
-					System.out.println("aaaa");
+					
+					System.out.println(userEmail);
+					
 					
 					
 					
 					//get user info
-					userList = dao.getUserByEmail(userEmail);
+					user = dao.getUserByEmail(userEmail);
 					
 					//add build to user's build
-					userList.get(0).getBuildList().add(build);
-					
-					//update user
-					dao.insertUser(userList.get(0));
+					user.getBuildList().add(build);
 					
 					//insert build
 					dao.insertBuild(build);
 					
+					//update user
+					dao.insertUser(user);
+					System.out.println("aaaa");
+					
+					
 					//determine build is inserted
 					out.print(1);
-					out.flush();*/
+					out.flush();
 					System.out.println("build inserted");	
 					user = null;
 					userList.clear();

@@ -66,7 +66,7 @@ public class DAO {
 		
 	}
 	
-	public List<User> getUserByEmail(String email){
+	public User getUserByEmail(String email){
 		
 		Session session= sessionFactory.openSession();
 		session.beginTransaction();
@@ -76,7 +76,10 @@ public class DAO {
 		query.setString("email", email);
 		List<User> userList = (List<User>)query.list();
 		
-		return userList;
+		session.getTransaction().commit();
+		session.close();
+		
+		return userList.get(0);
 	}
 	
 	public boolean checkUser(String email){

@@ -17,6 +17,7 @@
 		<mapping class="ca.sheridancollege.beans.User" />
 		<mapping class="ca.sheridancollege.beans.Build" />
 		<mapping class="ca.sheridancollege.beans.Comment" />
+		<mapping class="ca.sheridancollege.beans.ComputerPart" />
 
 	</session-factory>
 </hibernate-configuration>
